@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# Raw and derived data are not published (source licences)
+data/raw/
+data/db/
