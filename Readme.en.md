@@ -18,10 +18,7 @@ Status
 Phase 0 (setup). This README will be updated with each phase.
 
 Scope
-ATP men's singles, main draw only.
-Excluded: Challenger, Futures / ITF, qualifying, WTA, doubles and Davis Cup.
-Starting with the 4 Grand Slams and the 9 Masters 1000 events.
-Active players only (at least one main-draw match in the last 52 weeks).
+ The database keeps all ATP tour-level main-draw matches (needed to compute Elo ratings). Analysis and publications start with the 4 Grand Slams, the 9 Masters 1000 events and the ATP Finals (14 events).
 Matches from 2000 (needed to compute expected performance with Elo); conditions and player profiles from 2015.
 How it is analysed
 Tournament card: altitude, weather per edition, ball and estimated court speed.
@@ -34,7 +31,7 @@ Statistical rules: minimum number of matches per group, confidence intervals nex
 
 Data and licences
 Data	Source	Licence / terms
-Matches, players and rankings	Jeff Sackmann / Tennis Abstract, tennis_atp	CC BY-NC-SA 4.0: attribution, non-commercial use only, share alike
+Matches, players and rankings	| Matches and players | [TennisMyLife (TML) database](https://stats.tennismylife.org/tennis-match-database), based on Jeff Sackmann's tennis_atp | Stated terms: educational, analytical and research use; no redistribution or commercial use of the raw data without permission. The site also labels it MIT; treated as non-commercial until clarified. Raw files are not published here. |
 Historical weather	Open-Meteo	Free API for non-commercial use only; attribution required
 Altitude, balls, indoor or outdoor, notes	Collected by hand, each item with its source and date accessed	Own work
 
