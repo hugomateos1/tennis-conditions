@@ -17,3 +17,4 @@ This file records where each file came from so the work can be reproduced.
 | File | Downloaded | Notes |
 | --- | --- | --- |
 | 2024.csv | 2026-10-22 | 653,446 bytes. ATP main tour. Includes Davis Cup (tourney_level D), to be filtered out. |
+   | 2000.csv to 2026.csv | 2026-10-23 | ATP main tour yearly files, downloaded in one batch (2024.csv on 2026-10-22). 2026 is a partial season. |
