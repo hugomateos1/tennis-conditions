@@ -18,3 +18,4 @@ This file records where each file came from so the work can be reproduced.
 | --- | --- | --- |
 | 2024.csv | 2026-10-22 | 653,446 bytes. ATP main tour. Includes Davis Cup (tourney_level D), to be filtered out. |
    | 2000.csv to 2026.csv | 2026-10-23 | ATP main tour yearly files, downloaded in one batch (2024.csv on 2026-10-22). 2026 is a partial season. |
+   | 2000.csv to 2026.csv (re-downloaded) | 2026-10-25 | Corrected versions after reporting issues to TML. TML replied by email (2026-10-25) that four issues were fixed: 2025 missing match numbers, 2026 US Open indoor value, 2026 Winston-Salem level, 2024 Doha and Los Cabos level. The email did not address the licence question. Previous versions kept locally in data/raw/before_tml_fix/ (not published). |
