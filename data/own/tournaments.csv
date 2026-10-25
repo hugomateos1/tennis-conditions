@@ -1,0 +1,15 @@
+event_no,tournament_id,name,level,surface,indoor_outdoor,source,date_consulted,doubtful,notes
+580,australian_open,Australian Open,G,Hard,O,TML files,2026-10-24,no,TML flag is per tournament; roof use per match is not recorded
+520,roland_garros,Roland Garros,G,Clay,O,TML files,2026-10-24,no,
+540,wimbledon,Wimbledon,G,Grass,O,TML files,2026-10-24,no,No 2020 edition
+560,us_open,US Open,G,Hard,O,TML files,2026-10-24,no,2026 file has indoor typo (0)
+404,indian_wells,Indian Wells Masters,M,Hard,O,TML files,2026-10-24,no,
+403,miami,Miami Masters,M,Hard,O,TML files,2026-10-24,no,
+410,monte_carlo,Monte Carlo,M,Clay,O,TML files,2026-10-24,no,Renamed in 2026 files
+1536,madrid,Madrid Masters,M,Clay,O,TML files,2026-10-24,no,TML shows hard indoor 2002-2007 and hard outdoor 2008; clay from 2009
+416,rome,Rome Masters,M,Clay,O,TML files,2026-10-24,no,
+421,canada,Canada Masters,M,Hard,O,TML files,2026-10-24,no,City per edition not recorded in TML data
+422,cincinnati,Cincinnati Masters,M,Hard,O,TML files,2026-10-24,no,
+5014,shanghai,Shanghai Masters,M,Hard,O,TML files,2026-10-24,no,Renamed Shanghai in 2025
+352,paris,Paris Masters,M,Hard,I,TML files,2026-10-24,no,TML shows carpet 2000-2006
+605,atp_finals,ATP Finals,F,Hard,I,TML files,2026-10-24,no,Five spellings in TML files
