@@ -7,10 +7,9 @@ This file records where each file came from so the work can be reproduced.
 
 - Source: https://stats.tennismylife.org/tennis-match-database
 - Also on GitHub: https://github.com/Tennismylife/TML-Database
-- Terms stated by the source: educational, analytical and research use;
-  no redistribution, commercial use or sale of the raw data without permission.
-  The site also labels the data MIT, which conflicts with the README above;
-  treated as non-commercial until clarified.
+- Terms: non-commercial use only; commercial use needs prior written permission from TML. The MIT label that appeared on the website was an error and TML corrected it (confirmed by email, 2026-10-27).
+- Permission confirmed by email (2026-10-27): aggregate statistics, charts and tables may be published on X and GitHub if the project stays non-commercial, original CSV files and individual match records are not redistributed, and TML is credited.
+- Credit line: Data source: TennisMyLife — https://stats.tennismylife.org
 - Based on Jeff Sackmann's tennis_atp (CC BY-NC-SA 4.0); data collected from the
   ATP website and other sources, according to TML.
 
