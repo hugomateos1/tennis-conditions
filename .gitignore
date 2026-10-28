@@ -1,6 +1,38 @@
+# =====================================================================
+# tennis-conditions: .gitignore
+# Project-specific rules first, then the standard Python template.
+# =====================================================================
+
+# --- Project data: never published (TML terms: no redistribution of raw files or match records) ---
+data/raw/
+data/db/
+tml-data/
+
+# --- Private working notes and TML's email ---
+private/
+
+# --- Safety net: database files anywhere in the project ---
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Secrets ---
+.env
+*.key
+
+# --- Editors and operating system ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# =====================================================================
+# Standard Python template
+# =====================================================================
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[codz]
+*.py[cod]
 *$py.class
 
 # C extensions
@@ -27,8 +59,6 @@ share/python-wheels/
 MANIFEST
 
 # PyInstaller
-#   Usually these files are written by a python script from a template
-#   before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
@@ -46,8 +76,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
-*.py.cover
-*.lcov
+*.py,cover
 .hypothesis/
 .pytest_cache/
 cover/
@@ -55,19 +84,6 @@ cover/
 # Translations
 *.mo
 *.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
 
 # Sphinx documentation
 docs/_build/
@@ -84,74 +100,12 @@ profile_default/
 ipython_config.py
 
 # pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-# Pipfile.lock
-
-# uv
-#   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-# uv.lock
-
-# poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-# poetry.lock
-# poetry.toml
-
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#   pdm recommends including project-wide configuration in pdm.toml, but excluding .pdm-python.
-#   https://pdm-project.org/en/latest/usage/project/#working-with-version-control
-# pdm.lock
-# pdm.toml
-.pdm-python
-.pdm-build/
-
-# pixi
-#   Similar to Pipfile.lock, it is generally recommended to include pixi.lock in version control.
-# pixi.lock
-#   Pixi creates a virtual environment in the .pixi directory, just like venv module creates one
-#   in the .venv directory. It is recommended not to include this directory in version control.
-.pixi/*
-!.pixi/config.toml
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule*
-celerybeat.pid
-
-# Redis
-*.rdb
-*.aof
-*.pid
-
-# RabbitMQ
-mnesia/
-rabbitmq/
-rabbitmq-data/
-
-# ActiveMQ
-activemq-data/
+.python-version
 
 # SageMath parsed files
 *.sage.py
 
 # Environments
-.env
-.envrc
 .venv
 env/
 venv/
@@ -166,7 +120,7 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs/Zensical documentation
+# mkdocs documentation
 /site
 
 # mypy
@@ -182,385 +136,3 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-
-# PyCharm
-#   JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#   be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#   and can be added to the global gitignore or merged into this file.  For a more nuclear
-#   option (not recommended) you can uncomment the following to ignore the entire idea folder.
-# .idea/
-
-# Abstra
-#   Abstra is an AI-powered process automation framework.
-#   Ignore directories containing user credentials, local state, and settings.
-#   Learn more at https://abstra.io/docs
-.abstra/
-
-# Visual Studio Code
-#   Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore that
-#   can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
-#   and can be added to the global gitignore or merged into this file. However, if you prefer, you
-#   could uncomment the following to ignore the entire vscode folder
-# .vscode/
-# Temporary file for partial code execution
-tempCodeRunnerFile.py
-
-# Ruff stuff:
-.ruff_cache/
-
-# PyPI configuration file
-.pypirc
-
-# Marimo
-marimo/_static/
-marimo/_lsp/
-__marimo__/
-
-# Streamlit
-.streamlit/secrets.toml
-# Raw and derived data are not published (source licences)
-data/raw/
-data/db/
-# tennis-conditions: project notes (private)
-
-Living document, kept out of GitHub (folder `private/`). Last updated: 2026-10-28.
-It explains every part of the project, records decisions and results so far, and lists what to improve. Items marked **(unverified)** are guesses or things not yet checked. Nothing here is legal advice.
-
----
-
-## 1. Purpose and scope
-
-**Goal:** a relational database of ATP tournament conditions (altitude, weather, ball, estimated court speed, player workload) joined with match results, to describe how players perform under different conditions and how they arrive at a tournament. Descriptive only: no betting, no odds, no forecasts for betting.
-
-**Scope**
-- ATP men's singles, main draw only.
-- The database keeps **all tour-level main-draw matches from 2000** (needed to compute Elo ratings).
-- Analysis and publications cover **14 events**: the 4 Grand Slams, the 9 Masters 1000 events and the ATP Finals.
-- Conditions and player profiles from 2015. Elo from 2000 (2000-2004 is warm-up).
-- Excluded: Challenger, Futures/ITF, qualifying, WTA, doubles, Davis Cup, United Cup, Laver Cup, ATP Cup, Next Gen Finals, Olympics, walkovers and defaults.
-- Retirements are kept and flagged.
-- Active players appear in what is published.
-
-**Why one Elo for all tour-level matches but 14 events analysed:** a rating built only from 14 events a year would be thin. ATP 250/500 matches feed the rating (44% of matches are 250s), and the analysis is filtered to the 14 events with the `analysed` flag (28,666 of 71,327 matches; 12,962 from 2015 on). The `analysed` flag does not affect the Elo.
-
-**Division of work:** SQL for selecting, joining and aggregating the data; Python for models, intervals and charts. Meeting point: `pd.read_sql(...)`.
-
-## 2. Status snapshot (2026-10-28)
-
-| Phase | State |
-| --- | --- |
-| 0. Setup | Done, except: players/rankings files, X account |
-| 1. Matches and expected performance | Database, Elo v1, evaluation and ranking views done. Recent form not started |
-| 2. Venues, weather, speed | Not started |
-| 3. Profiles and recent form | Not started |
-| 4. Web | Not started |
-
-## 3. Data sources and licences
-
-**Match data: TennisMyLife (TML)**, yearly ATP CSV files 2000-2026 from `stats.tennismylife.org/tennis-match-database`.
-
-- Jeff Sackmann's original GitHub repositories (`tennis_atp` and others) were **removed from GitHub in September 2026** according to issues and pull requests from other users. The reason is unknown **(unverified)**. TML describes itself as based on Sackmann's work.
-- **Licence, resolved by email (2026-10-27):** TML confirmed that aggregate statistics, charts and tables may be published on X and GitHub if (1) the project stays non-commercial, (2) the original CSV files and individual match records are not redistributed, and (3) TML is credited. The MIT label on their website was an error and has been corrected: the data is for non-commercial use, and commercial use needs prior written permission. **Keep the email itself in this folder.**
-- **Their website now states** (checked 2026-10-27): personal, educational and non-commercial research use only; permission needed for commercial use, including publishing probabilities on advertising-supported websites or offering paid features; no redistribution or resale of raw CSVs; third-party terms may also apply (probably ATP / Sackmann, **unverified**).
-- **Credit line (their wording):** `Data source: TennisMyLife — https://stats.tennismylife.org`. README adds that TML is based on Sackmann's work (CC BY-NC-SA 4.0).
-- **What the permission does not cover:** the email names X and GitHub. A website is a third venue; a free, ad-free site looks consistent with their terms but is not confirmed (see section 12).
-- **Never publish:** the raw CSVs, the `matches` table, or match-level tables such as `elo_long`. Aggregates only.
-- **Monetisation** would require TML's written permission or a source with a commercial licence, and a professional's review.
-- The data is collected from the ATP website and other sources, according to TML. Whether that creates additional terms **(unverified)**.
-
-**Other planned sources (Phase 2)**
-- Weather: Open-Meteo historical API (free for non-commercial use, attribution required). Not used yet.
-- Altitude: an elevation service, computed once per venue. Not used yet.
-- Balls, roof status, notes: collected by hand, each item with source and date consulted, doubtful items flagged.
-
-**TML edits files quietly.** After we reported issues, TML fixed the ones we named and also changed other values (for example serve stats in about 1% of 2025 rows and service-game counts in 2026). On 2026-10-27 their page showed 2018 and 2026 modified after our 25 Oct download. Consequence: record the download date of every file, keep old copies locally, store file hashes, and re-download before each publication.
-
-## 4. Repository and tools
-
-| Tool | What it is for |
-| --- | --- |
-| Git and GitHub | History and backup; public repository `hugomateos1/tennis-conditions` |
-| VS Code and Jupyter | Editor and notebooks |
-| Python 3.14.2 (launcher `py`) | Language; the plain `python` command is only the Microsoft Store shortcut on this machine |
-| `.venv` | Private package folder; use `.\.venv\Scripts\python.exe` or the VS Code kernel (activation script failed) |
-| pandas, numpy | Tables and maths |
-| sqlite3 | The database |
-| nbstripout | Removes notebook outputs when staging, so match rows never reach GitHub |
-| PowerShell | Downloads (`Invoke-WebRequest` loop) |
-
-**Folders**
-
-```
-tennis-conditions/
-├── data/
-│   ├── raw/        # downloaded CSVs, ignored by Git, never published
-│   │   └── before_tml_fix/   # older copies, also ignored
-│   ├── own/        # our own tables: tournaments.csv (committed)
-│   ├── db/         # tennis.db (ignored by Git)
-│   └── Sources.md  # sources and download dates (note the capital S)
-├── notebooks/      # 01 explore, 02 all years, 03 clean + load, 04 SQL, 05 Elo
-├── private/        # these notes and TML's email (ignored by Git)
-├── src/            # scripts (not used yet)
-├── README.md / README.es.md
-└── requirements.txt
-```
-
-**Git habits:** never `git add .` while data is in the folder; name files and check exact names (`git status`); check `git diff --cached --stat` before committing; write messages that say what changed. If `index.lock` appears, wait, check no Git process is running, then delete the lock file.
-
-**Git identity:** commits use the GitHub noreply address. Early commits show a university address and some show a placeholder; rewriting history is optional. Never put a personal email in Git config.
-
-## 5. The data pipeline
-
-1. **Download** 27 files, `2000.csv` to `2026.csv`, into `data/raw/`.
-2. **Load** all files into one table (`03_clean.ipynb`), adding `file_year`.
-3. **Clean** (rules below) into the table `clean`.
-4. **Load** `clean` into SQLite (`matches`) and our own table into `tournaments`.
-5. **Compute** Elo from `matches` (`05_elo.ipynb`) and save `elo_long` and `players`.
-
-**Raw file facts**
-- 27 files, identical 50 columns every year (checked).
-- Tournament level codes: `G` Grand Slam, `M` Masters 1000, `F` ATP Finals, `250`, `500`, `A` (team events and Next Gen Finals, plus Doha/Los Cabos in the old 2024 file, since fixed), `D` Davis Cup, `O` Olympics. TML's own page documents fewer codes than the files contain.
-- `tourney_id` looks like `2024-580`. The part after the hyphen (the **event number**) stays the same across years even when the name changes (for example 410 is Monte Carlo under two names; 605 is the ATP Finals under five spellings). We key our tournaments table on it.
-- Missing aces, service points and minutes are under 6% every year once Davis Cup is excluded; `indoor` is never missing outside Davis Cup.
-
-**Cleaning rules (in order)**
-1. Exclude levels `D` and `O`.
-2. Keep level `A` only for Doha and Los Cabos (redundant since TML relabelled them 250); other `A` events are team events or Next Gen Finals.
-3. Exclude walkovers (`W/O`) and defaults (`DEF`).
-4. Convert `tourney_date` to a real date; fix `indoor` value `0` to `O` (TML has since corrected the 2026 US Open).
-5. Add `retired` (score contains `RET`), `event_no`, `analysed` (event in our 14 and level G/M/F).
-6. Drop exact duplicates ignoring `match_num` (3 pairs found: Gijon, Stuttgart and Rome 2021).
-7. Add `round_order` (R128 1, R64 2, R32 3, R16 4, RR 5, QF 6, SF 7, F 8).
-8. Add `tourney_start` (earliest date of each tourney_id), sort by it, tourney_id, round_order, date, match_num, winner_id, and assign `match_id` 1..N.
-
-**Result:** 71,327 rows, of which 28,666 are in the 14 analysed events (12,962 from 2015 on).
-
-**Known data quirks**
-- `tourney_date` is **not** reliably the start of the tournament week. In 2026 it looks per-match (up to 13 distinct dates in one tournament); a few older tournaments have two dates. Never read it as "the day the match was played"; use `tourney_start` and round order.
-- Hong Kong and Brisbane start on 2024-12-29 but belong to the 2025 file, so a year-end 2024 ranking should use an earlier date (2024-12-22).
-- `match_num` was empty for 489 rows in the old 2025 file (since fixed by TML). Do not rely on it as a key.
-- `indoor` and `surface` describe the **tournament**, not each match (roof closures are not recorded). `draw_size` is not the number of players (Masters with 96 players show 128).
-- Draw sizes changed over time (Madrid and Rome from 55 to 95 matches in 2023, Canada and Cincinnati in 2025), so match counts per year are not comparable.
-- Masters finals used to be best of 5, so compare rates, keep `best_of`.
-- Surface/roof changes for our events are before 2015 (Madrid was hard indoor 2002-2007, hard outdoor 2008, clay from 2009; Paris was carpet until 2006). Madrid 2008 is doubtful.
-- Rome 2020 has one fewer R64 match than other editions (unexplained, doubtful). Rome 2021's missing R32 match was a walkover we removed.
-- The ATP Finals have 389 matches in `clean` where 390 were expected (15 per edition, 2000-2025). The missing match is before 2015; cause unverified (likely a walkover/default removed).
-- 2020 is low because of COVID (no Wimbledon); 2026 is a partial season (no ATP Finals yet).
-- Round-robin (`RR`) appears in the ATP Finals and in five 2007 events at level 250 (Adelaide, Buenos Aires, Delray Beach, Las Vegas, Vina del Mar).
-- The match files have **no winners or unforced errors**; only aces, double faults, service points, first/second-serve points won, service games and break points.
-
-## 6. Database schema
-
-**`matches`** (third-party data): all columns of the cleaned TML table (50 original columns) plus `file_year`, `date`, `tourney_start`, `retired`, `event_no`, `analysed`, `round_order`, `match_id`, `source`, `licence`, `downloaded`. Dates are stored as text `YYYY-MM-DD`; booleans as 0/1.
-
-**`tournaments`** (our own table, from `data/own/tournaments.csv`): `event_no`, `tournament_id`, `name`, `level`, `surface`, `indoor_outdoor`, `source`, `date_consulted`, `doubtful`, `notes`, `licence`. 14 rows. City and coordinates are deliberately left out because venues can change by edition; a per-edition venue table is planned for Phase 2.
-
-**`elo_long`** (derived): one row per player per match (142,654 rows): `match_id`, `tourney_start`, `player_id`, `opponent_id`, `elo_before`, `elo_after`, `expected`, `result`, plus `source`, `licence`, `method`.
-
-**`players`** (derived): latest name per player ID (1,681 players), with `source` and `licence`.
-
-**Optional SQL practice:** a view `analysed_matches` (analysed matches from 2015 with tournament name, serve totals and a `has_serve_stats` flag), so queries stop repeating the same joins.
-
-**Rule:** what is ours (tournaments, venues, balls, notes) is kept separate from third-party data. Every table carries `source` and `licence`.
-
-## 7. Statistical rules
-
-- Minimum number of matches per group (20-30); smaller groups are not shown.
-- Uncertainty next to every figure (intervals).
-- Care with multiple comparisons: the more combinations tested, the more suspicious a striking result.
-- Language of profiles, not causes: conditions travel together (clay, altitude, heat, ball).
-- "Not enough evidence" is a valid, publishable result.
-- Time-based validation: warm-up 2000-2004, tuning 2005-2018, test 2019-2026. Compare variants on tuning years only; look at the test years once, at the end.
-- Differences under about 0.001 in log loss count as ties; a tie keeps the simpler model.
-- Show rates as percentages.
-
-## 8. Elo rating (v1, final)
-
-**Idea:** every player has a rating; a win raises it and a loss lowers it, by more when the result was unexpected. It gives each match an expected probability, the base for "performance above expectation".
-
-**Formulas**
-- Expected probability that A beats B: `E_A = 1 / (1 + 10^((R_B - R_A) / 400))`; `E_B = 1 - E_A`. Equal ratings give 50.0%; a 100-point edge gives 64.0%; 400 points gives 90.9%.
-- Update: `R_new = R + K * (S - E)` with S = 1 for a win and 0 for a loss.
-- Performance above expectation for a match: `r = S - E` (a win that was 90.9% likely gives +0.091; the loss gives -0.909).
-- Recent form (from the guide): `F = sum(w_i * r_i) / sum(w_i)`, `w_i = 0.5^(i/10)`, i = 0 is the latest match.
-
-**Parameters of v1 (our choices, not facts about tennis):** start 1450; K = 40 for a player's first 30 matches, then 20; scale 400; one overall rating; every match weighted equally (all tour-level main-draw matches in the database); one continuous rating across seasons (never reset); order of play = `match_id`.
-
-**Used by the Elo:** only who played whom, who won, and the order. No match statistics.
-
-**Known limits:** everyone starts equal in 2000, so early years are unreliable; players coming up through Challengers enter with no history (Challenger, qualifying, Davis Cup and the Olympics are not in the data); best-of-5 and best-of-3 count the same; within a round the order of matches is arbitrary (matters only for the ATP Finals round-robin); retirements count as normal results.
-
-**Evaluation results (Elo v1)**
-
-| | 2005-2018 | 2019-2026 |
-| --- | --- | --- |
-| Matches scored | 37,600 | 19,262 |
-| Accuracy (favourite wins) | 67.4% | 64.1% |
-| Log loss (50/50 baseline 0.693) | 0.5978 | 0.6288 |
-| Brier score (50/50 baseline 0.25) | 0.2062 | 0.2199 |
-| Better official ATP rank wins | 66.2% | 63.3% |
-| Elo minus ATP rank (paired, 95% interval) | +1.22 points (0.82 to 1.61) | +0.77 points (0.18 to 1.36) |
-
-- The Elo beats both baselines. The gain over the official ranking is small and its intervals assume independent matches, so true uncertainty is probably larger.
-- **Calibration (2005-2018):** for predicted probabilities under 60% the model is almost exact; from 60% upwards the favourite wins about 1.5-2 points less often than predicted (for example 77.4% predicted vs 75.6% actual). So the model is slightly **overconfident** for clear favourites. Not caused by K or by the scale constant; cause not identified.
-
-**Variants tested on 2005-2018 (log loss; v1 = 0.5978)**
-- K grid: best `k_old = 25, k_new = 30` (0.5975), a tie; `k_old = 10` is clearly worse (about 0.603).
-- Tournament-level weights (slams x1.25, masters/finals x1.1, 250s x0.8, a gradient, etc.): 0.5979 to 0.5983, ties or slightly worse.
-- Inactivity (larger K after 180 or 365 days; +5 bonus for a winner returning after a long gap): best 0.5977, a tie. The bonus creates rating points from nothing, so it is not kept. A "gap" only means a gap in ATP main-tour matches; Challenger activity is invisible to us.
-- Scale constant: 300 = 0.5984, 350 = 0.5978 (tie), 400 = 0.5978, 450 = 0.5981, 500 = 0.5986, 600 = 0.6000, 700 = 0.6017. Larger scales are worse; 400 kept.
-- Capping the upset term (limits how much an upset moves ratings): cap 0.7 = 0.5994, 0.6 = 0.6031, 0.5 = 0.6112. Worse, and more so the stronger the cap; not kept.
-- Resetting a rating after 182 days of inactivity: full reset to 1450 = 0.6012 (worse); halfway reset = 0.5976 (tie).
-
-## 9. Ace rate by tournament (descriptive)
-
-Share of service points that were aces, pooled over analysed matches from 2015 on, using matches where aces and service points exist for both players (sum of aces / sum of service points). It is **not** court speed: it mixes who plays (big servers), best-of-3 vs best-of-5, surface, altitude, heat, ball and roof.
-
-| Tournament | Matches used | Ace % |
-| --- | --- | --- |
-| ATP Finals | 165 | 9.91 |
-| Cincinnati Masters | 735 | 9.67 |
-| Shanghai Masters | 654 | 9.60 |
-| Wimbledon | 1,390 | 9.32 |
-| Paris Masters | 555 | 9.31 |
-| Australian Open | 1,520 | 9.28 |
-| Canada Masters | 671 | 8.59 |
-| US Open | 1,517 | 8.38 |
-| Miami Masters | 1,037 | 8.18 |
-| Indian Wells Masters | 1,033 | 7.08 |
-| Madrid Masters | 757 | 6.99 |
-| Rome Masters | 812 | 5.67 |
-| Roland Garros | 1,511 | 5.64 |
-| Monte Carlo | 602 | 4.46 |
-
-Reading: clay tournaments have the lowest ace rates in this data. Madrid sits close to Indian Wells; why is unknown (altitude is a hypothesis, not tested). No intervals yet, so close values (6.99 vs 7.08) cannot be told apart. The by-year version (at least 20 matches per tournament-year; the Finals would drop out) and the service-points-won version are written but their results have not been reviewed.
-
-## 10. Ranking views (built)
-
-One continuous Elo, read at different dates, in `05_elo.ipynb`:
-- **`snapshot(as_of, ...)`:** each player's last rating up to that date (SQL with CTEs). Eligibility: at least 15 matches overall; last tournament no more than 182 days before the date; optional `min_recent` (matches in the last 52 weeks; 15 recommended). Players with fewer than 30 matches marked provisional.
-- **`period_view(start, end, ...)`:** rating at start and end, change, peak, matches in the period, for a week, month, year or several years. A match belongs to the period of its `tourney_start`; a tournament in progress is partial, so run reports after the event ends.
-- Always labelled "Elo rating calculated from ATP tour-level main-draw results, 2000 onwards". It is not the official ATP ranking and not a prediction.
-- First check (2024-12-22): top 20 looked plausible (Sinner, Djokovic, Alcaraz, Nadal, Zverev, Medvedev...). Comparison with the official year-end ranking not done yet.
-- Frozen ratings: Elo does not change while a player is out, so a minimum of recent matches is needed (Kyrgios was #8 in 2024 with one recent match until it was added).
-- Do not publish rankings dated before about 2005 (warm-up), and do not publish week or month changes based on 1-2 matches.
-
-## 11. Publishing on X
-
-Plan: charts and data on tournaments and players, plus a weekly or monthly Elo report.
-
-**Checklist before the first post**
-- ~~TML's answer on publishing aggregate statistics~~ Done (2026-10-27).
-- Credit line on every image: `Data source: TennisMyLife — https://stats.tennismylife.org`; method note (a line in the profile or a link to the repository).
-- Intervals and sample sizes on every number; minimum matches per figure.
-- Wording that avoids causes ("highest ace rate in this data", not "fastest court").
-- Aggregates only: no raw rows, no match-level tables.
-- No betting content; no ATP or tournament logos; no suggestion of affiliation.
-- Post by hand (automating through the X API may cost money).
-- Re-download TML files and rerun `03` and `05` before publishing; record the date.
-- Public Git email fixed (done: noreply address). Check both GitHub privacy boxes.
-
-## 12. Website / app and articles (proposal, needs a decision)
-
-Goal: a free website or app with some of the statistics and some articles. This extends the guide (which plans a Streamlit dashboard in Phase 4 and a newsletter in Phase 5), so it is a plan change to confirm.
-
-**Options (my suggestion, details of free tiers and limits to verify before choosing)**
-- **Streamlit app (Python):** already in the guide; good for interactive selectors (group by tournament, surface, player). Hosting on Streamlit Community Cloud is free according to the guide; exact limits and repository requirements **(unverified)**.
-- **Static site (for example GitHub Pages) for articles and fixed charts:** free hosting from the repository **(unverified details)**; articles written in Markdown; charts exported as images.
-- **Suggested combination:** a static site for articles and fixed charts, plus a Streamlit app for the interactive part, both linking to the same code. Start with the static site because it needs no server.
-
-**Constraints**
-- Publish **aggregates only**, never raw match rows. The app should read pre-computed aggregate tables, not the full `matches` table or `elo_long`.
-- **No advertising or paid content.** TML's terms list ad-supported sites that publish probabilities and paid features as commercial uses needing written permission.
-- TML's permission names X and GitHub only. Before launching a site, send a one-line follow-up asking whether aggregate charts on a free, ad-free site are fine.
-- Same credit line, intervals and wording rules as for X.
-- Keep the Elo labelled as ours, not the ATP ranking.
-- No betting content.
-
-## 13. Improvements for the future
-
-**Model and calibration**
-1. **Calibration correction (next candidate for the overconfidence):** a logistic mapping `p_new = sigmoid(a * logit(p) + b)` fitted on 2005-2018 and checked once on 2019-2026 (or isotonic). If `a` is clearly below 1, the model spreads probabilities too far. K and the scale constant are ruled out as causes.
-2. **Surface Elo:** a rating per surface blended with the overall one; the main risk is small samples per player and surface.
-3. **Rating from serve and return points** (aces, first/second-serve points won, break points) instead of only win/loss: more information per match and the natural base for court speed.
-4. **Logistic regression** combining Elo difference, surface-Elo difference, ATP rank difference, age, height, best-of; check with the time split; keep it small to avoid overfitting.
-5. **Margin of victory** (sets and games from the score text; retirements distort it).
-6. **Glicko** or similar, which stores an uncertainty for each rating (fits the "evidence level" idea and the frozen-rating problem).
-7. Possibly a mild pull toward the average at the start of each season (unverified that it helps).
-8. A paired comparison with an interval (per-match log-loss difference) for any close variant.
-9. Possibly add Olympics or qualifying matches to the Elo (data not downloaded; effect untested).
-
-**Court speed and conditions**
-10. **Player-adjusted speed:** compare each tournament's actual serve results with what the same players produce elsewhere (a regression with a server effect and a tournament effect, or mixed-effects), with intervals. Use service points won as well as aces.
-11. Shrinkage (empirical Bayes) for small groups; false-discovery or Holm corrections for many comparisons.
-12. **Per-edition venue table** (city, country, coordinates, altitude, with sources) and **weather** from Open-Meteo; treat outdoor weather as not applicable for indoor matches.
-13. Ball notes per edition (brand, model, type) with sources and dates; a register of public player comments as context only.
-14. Workload and travel variables (matches and minutes in previous weeks; distance between consecutive venues, approximate).
-15. Winners and unforced errors are not in TML's files. The Match Charting Project is a possible source (sampled matches only; coverage and licence unverified).
-
-**Data and process**
-16. Players and rankings tables (check where TML publishes rankings and its terms first).
-17. Move the cleaning and Elo code from notebooks into scripts in `src/` so the whole pipeline runs with one command, and a documented weekly refresh (download, hashes, clean, Elo, report).
-18. Store SHA256 hashes of the raw files (`data/own/raw_file_hashes_YYYY-MM-DD.txt`).
-19. Report new findings to TML; document anything that changes upstream.
-20. Intervals by bootstrap over matches, grouped by player where possible, since the same players appear many times.
-21. More SQL practice: views, window functions (for rolling form), a venue and weather join, and a few `CREATE TABLE` / `INSERT` / `UPDATE` statements.
-
-## 14. Open items
-
-| Item | State |
-| --- | --- |
-| Move these notes into `private/` and keep TML's email there | Pending |
-| Re-download TML files (2018 and 2026 changed after our download), rerun `03` and `05`, record the date | Pending, before the first post |
-| Query 5 (ace % by tournament and year) reviewed | Pending |
-| Recent form (Step 38) | Next |
-| First publishable post (2024 ranking chart, check against the official year-end ranking, method note) | Next |
-| Calibration correction | After the first post |
-| Rome 2020 note in `tournaments.csv` | Pending |
-| Raw file hashes | Pending |
-| Optional `analysed_matches` view | Pending |
-| Players and rankings files | Not started |
-| X account | Not started |
-| Website decision (section 12) and follow-up to TML | Needs decision |
-| GitHub email privacy boxes confirmed | Check |
-
-## 15. Glossary
-
-- **Elo rating:** a number per player that goes up with wins and down with losses.
-- **Expected probability:** the chance of winning the model assigns before a match.
-- **K:** how much a rating moves per match.
-- **Scale constant (400):** how quickly a rating gap turns into a win probability.
-- **Accuracy:** share of matches where the model's favourite won.
-- **Log loss:** average of -ln(p), p being the probability given to what happened; lower is better; heavily penalises confident mistakes.
-- **Brier score:** average of (1 - p)^2; lower is better.
-- **Calibration:** whether "70%" predictions come true about 70% of the time.
-- **Burn-in / tuning / test:** years used to warm up, to compare variants, and to check once at the end.
-- **Overfitting / leakage:** fitting noise, or letting future information into the prediction.
-- **JOIN:** SQL operation that connects rows of two tables through a shared key (here `event_no`).
-- **CTE (`WITH`):** a named temporary result inside a SQL query.
-- **View:** a saved query that behaves like a table.
-- **`HAVING`:** filters groups after `GROUP BY`; `WHERE` filters rows before.
-- **Wilson interval:** an interval for a percentage that behaves well with small samples.
-- **Bootstrap:** resampling the data many times to estimate uncertainty.
-- **Shrinkage:** pulling small-sample estimates toward the overall average.
-- **nbstripout:** removes notebook outputs when staging files.
-
-## 16. Decision log
-
-| Date | Decision |
-| --- | --- |
-| 2026-10-22 | Public repository; English README; project language English |
-| 2026-10-22 | Source changed from Sackmann (repositories removed) to TML |
-| 2026-10-22 | Raw data never committed; `data/raw/` and `data/db/` ignored |
-| 2026-10-23 | Database keeps all tour-level matches for Elo; 14 events analysed |
-| 2026-10-23 | Exclude Davis Cup, team events, Next Gen Finals, Olympics, walkovers, defaults; keep retirements flagged |
-| 2026-10-24 | Tournaments keyed by TML event number; city/coordinates deferred to a per-edition venue table |
-| 2026-10-25 | Re-downloaded corrected TML files after bug report |
-| 2026-10-26 | Show rates as percentages |
-| 2026-10-26 | Elo v1 kept: start 1450, K 40/20, no weights, no inactivity effect (variants tied) |
-| 2026-10-26 | Wish recorded: free website or app plus articles (section 12, to be decided) |
-| 2026-10-26 | Notes kept private, outside GitHub |
-| 2026-10-27 | TML confirmed in writing: aggregates may be published on X and GitHub (non-commercial, no raw files or match records, credit TML); MIT label was an error |
-| 2026-10-27 | Scale constant 400 kept; upset cap and resets not adopted; inactive players removed from rankings only (six-month rule), not from the model |
-| 2026-10-27 | Rule: SQL for data, Python for statistics |
-| 2026-10-27 | Git commits use the GitHub noreply address |
