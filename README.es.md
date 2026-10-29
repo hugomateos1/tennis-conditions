@@ -84,9 +84,11 @@ tennis-conditions/
 ```
 
 ## Modelo de datos (resumen)
+## Modelo de datos (resumen)
 
 Construidas hasta ahora: `matches`, `tournaments`, `players`, `elo_long` y tablas agregadas derivadas: `serve_advantage_by_year`, `serve_advantage_pooled`, `elo_ranking_snapshots` y `player_season_cards`.
 
+Previstas: `venues`, `editions`, `weather`, `rankings`, `ball_notes`.
 Cada tabla incluye las columnas `source` y `licence`, y las tablas propias se mantienen separadas de los datos de terceros.
 
 ## Hoja de ruta
