@@ -16,7 +16,7 @@ Una base de datos de las **condiciones de cada torneo ATP** (altitud, clima, bol
 
 ## Estado
 
-Fase 1 (partidos y rendimiento esperado): la base de datos de partidos y un Elo básico ya están construidos. Los datos de condiciones (sedes, clima, bola) vienen después. Este README se actualiza con cada fase.
+La Fase 1 (partidos y rendimiento esperado) está terminada: la base de datos de partidos, un Elo ajustado por superficie y las vistas de ranking ya están construidos. La Fase 2 ha empezado con una medida, ajustada por jugador, de cuánto favorece cada torneo al saque. Sedes, altitud, clima y bolas vienen después. Este README se actualiza con cada fase.
 
 ## Alcance
 
@@ -28,15 +28,29 @@ Fase 1 (partidos y rendimiento esperado): la base de datos de partidos y un Elo 
 
 ## Cómo se analiza
 
-1. **Ficha de torneo:** altitud, clima por edición, bola y velocidad estimada.
+1. **Ficha de torneo:** altitud, clima por edición, bola y cuánto favorece el torneo al saque.
 2. **Perfil de jugador por condiciones:** rendimiento sobre lo esperado agrupado por rasgos (pista rápida o lenta, altitud, calor o frío).
-3. **Forma reciente:** media del rendimiento sobre lo esperado en los últimos partidos de la superficie, con más peso a los más recientes.
+3. **Forma reciente:** resultados frente a lo esperado en los últimos partidos de la superficie.
 
 Los resultados se pueden agrupar por torneo, condiciones de pista, temporada, superficie o jugador.
 
-**Los ratings Elo** se calculan con los resultados del cuadro principal del circuito ATP desde 2000. Son ratings propios de este proyecto, no el ranking oficial de la ATP, y no son pronósticos.
-
 **Reglas estadísticas:** mínimo de partidos por grupo, intervalos de confianza junto a cada cifra, cuidado con las comparaciones múltiples y lenguaje de perfiles, no de causas. "No hay evidencia suficiente" es un resultado válido.
+
+## Métodos (resumen)
+
+**Ratings Elo.** Se calculan con los resultados del cuadro principal del circuito ATP desde 2000. Son ratings propios de este proyecto, no el ranking oficial de la ATP, y no son pronósticos.
+
+- Cada jugador tiene un rating general más un ajuste por superficie (tierra, dura, hierba, moqueta). El resultado esperado de un partido usa la suma de ambos, y los dos se actualizan después de cada partido.
+- Rating inicial 1450; K = 40 en los 30 primeros partidos de un jugador y 20 después; los ajustes por superficie usan un paso menor. Después, las probabilidades se calibran con una sola pendiente ajustada en los años anteriores.
+- La evaluación usa una separación temporal: los parámetros se eligieron con 2005-2018 y se comprobaron con 2019-2026, con log loss, puntuación de Brier y tablas de calibración. Las variantes que no mejoraron (pesos por nivel de torneo, efectos de inactividad, un tope a las sorpresas, otras constantes de escala) no se adoptaron.
+- Límites: en los datos solo hay partidos del cuadro principal ATP, así que no se reflejan los resultados de Challenger, clasificación, Davis Cup ni Juegos Olímpicos; un jugador que llega desde los Challengers entra sin historial.
+
+**Ventaja al saque por torneo.** Para cada juego de servicio se estima cuántos puntos de saque debería ganar el sacador según cómo rinden ese sacador y ese restador en otros torneos de la misma superficie y cubierta (a menos de un año del partido, sin usar nunca el torneo que se mide). El valor de un torneo es cuánto superan o no alcanzan los sacadores esa expectativa, en puntos porcentuales de puntos de saque, con un intervalo por bootstrap sobre los partidos.
+
+- Describe cuánto favorece un torneo al saque respecto al resto del circuito. No es velocidad de pista por sí sola: la superficie, la altitud, el calor, la bola y la cubierta influyen en la cifra, y los datos no pueden separarlos.
+- Los intervalos tratan los partidos como independientes, así que la incertidumbre real es mayor que la mostrada.
+
+**Forma reciente.** Se probó como predictor sobre el Elo ajustado por superficie y no aportó nada fuera de muestra, así que no se usa para predecir. Aun así puede mostrarse como vista descriptiva con una etiqueta de evidencia.
 
 ## Datos y licencias
 
@@ -46,7 +60,7 @@ Los resultados se pueden agrupar por torneo, condiciones de pista, temporada, su
 | Clima histórico (previsto) | [Open-Meteo](https://open-meteo.com) | API gratuita solo para uso no comercial; atribución obligatoria |
 | Altitud, bolas, cubierta o exterior, notas | Anotado a mano, cada dato con su fuente y fecha de consulta | Propio |
 
-Todo lo calculado con los datos de partidos (Elo, velocidad estimada, perfiles) se trata como no comercial. Solo se publican estadísticas agregadas. Los archivos en bruto y los registros de partidos individuales no se publican.
+Todo lo calculado con los datos de partidos (Elo, ventaja al saque, perfiles) se trata como no comercial. Solo se publican estadísticas agregadas. Los archivos en bruto, la base de datos y los registros de partidos individuales no se publican.
 
 Atribuciones:
 
@@ -55,7 +69,7 @@ Atribuciones:
 
 Este proyecto no está afiliado a la ATP, a la ITF ni a ningún torneo.
 
-## Estructura prevista
+## Estructura
 
 ```
 tennis-conditions/
@@ -63,23 +77,23 @@ tennis-conditions/
 │   ├── raw/          # archivos descargados, sin tocar (no se publican)
 │   ├── own/          # tablas propias: torneos, sedes, bolas, notas (con fuente y fecha)
 │   └── db/           # base de datos SQLite (no se publica)
-├── notebooks/        # exploración, limpieza, SQL y Elo
-├── src/              # scripts: carga, limpieza, Elo, clima
+├── notebooks/        # exploración, limpieza, SQL, Elo, forma y gráficos
+├── charts/           # gráficos agregados, se añaden tras revisarlos
+├── src/              # scripts (previstos)
 └── README.md
 ```
 
 ## Modelo de datos (resumen)
 
-Construidas hasta ahora: `matches`, `tournaments`, `players`, `elo_long`.
-Previstas: `venues`, `editions`, `weather`, `rankings`, `ball_notes`.
+Construidas hasta ahora: `matches`, `tournaments`, `players`, `elo_long` y tablas agregadas derivadas: `serve_advantage_by_year`, `serve_advantage_pooled`, `elo_ranking_snapshots` y `player_season_cards`.
 
 Cada tabla incluye las columnas `source` y `licence`, y las tablas propias se mantienen separadas de los datos de terceros.
 
 ## Hoja de ruta
 
-1. Preparación: repositorio, entorno y descarga de datos.
-2. Partidos y rendimiento esperado (Elo) en SQLite. *(en curso)*
-3. Sedes, clima y velocidad estimada de los 14 torneos.
+1. Preparación: repositorio, entorno y descarga de datos. *(hecho)*
+2. Partidos y rendimiento esperado (Elo) en SQLite. *(hecho)*
+3. Sedes, clima y velocidad estimada de los 14 torneos. *(empezado: ventaja al saque construida; sedes, altitud y clima a continuación)*
 4. Perfiles por condiciones y forma reciente.
 5. Panel web con selectores para agrupar y mezclar.
 6. Ampliar a ATP 500 y 250.

@@ -16,7 +16,7 @@ A database of the **conditions at each ATP tournament** (altitude, weather, ball
 
 ## Status
 
-Phase 1 (matches and expected performance): the match database and a basic Elo rating are built. Condition data (venues, weather, ball) comes next. This README is updated with each phase.
+Phase 1 (matches and expected performance) is done: the match database, a surface-adjusted Elo rating and ranking views are built. Phase 2 has started with a player-adjusted measure of how serve-friendly each tournament is. Venues, altitude, weather and balls come next. This README is updated with each phase.
 
 ## Scope
 
@@ -28,15 +28,29 @@ Phase 1 (matches and expected performance): the match database and a basic Elo r
 
 ## How it is analysed
 
-1. **Tournament card:** altitude, weather per edition, ball and estimated court speed.
+1. **Tournament card:** altitude, weather per edition, ball and how serve-friendly the tournament is.
 2. **Player profile by conditions:** performance above expectation, grouped by traits (fast or slow court, altitude, hot or cold).
-3. **Recent form:** average performance above expectation over the most recent matches on the surface, with more weight on the latest ones.
+3. **Recent form:** results against expectation over the most recent matches on the surface.
 
 Results can be grouped by tournament, court conditions, season, surface or player.
 
-**Elo ratings** are calculated from ATP tour-level main-draw results since 2000. They are this project's own ratings, not the official ATP ranking, and they are not predictions.
-
 **Statistical rules:** minimum number of matches per group, confidence intervals next to every figure, care with multiple comparisons, and the language of profiles rather than causes. "Not enough evidence" is a valid result.
+
+## Methods (summary)
+
+**Elo ratings.** Calculated from ATP tour-level main-draw results since 2000. They are this project's own ratings, not the official ATP ranking, and they are not predictions.
+
+- Each player has an overall rating plus a surface offset (clay, hard, grass, carpet). The expected result of a match uses the sum of the two, and both are updated after each match.
+- Start rating 1450; K = 40 for a player's first 30 matches and 20 afterwards; surface offsets use a smaller step. The probabilities are then calibrated with a single slope fitted on the earlier years.
+- Evaluation uses a time split: parameters were chosen on 2005-2018 and checked on 2019-2026, with log loss, Brier score and calibration tables. Variants that did not help (tournament-level weights, inactivity effects, a capped upset term, other scale constants) were not adopted.
+- Limits: only ATP main-draw matches are in the data, so a player's Challenger, qualifying, Davis Cup and Olympic results are not reflected; a player coming through the Challengers enters with no history.
+
+**Serve advantage by tournament.** For every service game, the number of service points the server should win is estimated from how that server and that returner perform at other events on the same surface and roof (within one year of the match, never using the event being measured). A tournament's value is how far servers beat or fall short of that expectation, in percentage points of service points, with a bootstrap interval over matches.
+
+- It describes how serve-friendly a tournament is relative to the rest of the tour. It is not court speed on its own: surface, altitude, heat, ball and roof all push the number, and the data cannot separate them.
+- The intervals treat matches as independent, so the real uncertainty is larger than shown.
+
+**Recent form.** Tested as a predictor on top of the surface-adjusted Elo and found to add nothing out of sample, so it is not used to predict. It can still be shown as a descriptive view with an evidence label.
 
 ## Data and licences
 
@@ -46,7 +60,7 @@ Results can be grouped by tournament, court conditions, season, surface or playe
 | Historical weather (planned) | [Open-Meteo](https://open-meteo.com) | Free API for non-commercial use only; attribution required |
 | Altitude, balls, indoor or outdoor, notes | Collected by hand, each item with its source and date accessed | Own work |
 
-Everything calculated from the match data (Elo, estimated speed, profiles) is treated as non-commercial. Only aggregate statistics are published. The raw files and individual match records are not.
+Everything calculated from the match data (Elo, serve advantage, profiles) is treated as non-commercial. Only aggregate statistics are published. The raw files, the database and individual match records are not.
 
 Attributions:
 
@@ -55,7 +69,7 @@ Attributions:
 
 This project is not affiliated with the ATP, the ITF or any tournament.
 
-## Planned structure
+## Structure
 
 ```
 tennis-conditions/
@@ -63,23 +77,24 @@ tennis-conditions/
 │   ├── raw/          # downloaded files, untouched (not published)
 │   ├── own/          # my own tables: tournaments, venues, balls, notes (with source and date)
 │   └── db/           # SQLite database (not published)
-├── notebooks/        # exploration, cleaning, SQL and Elo
-├── src/              # scripts: loading, cleaning, Elo, weather
+├── notebooks/        # exploration, cleaning, SQL, Elo, form and charts
+├── charts/           # aggregate charts, added after review
+├── src/              # scripts (planned)
 └── README.md
 ```
 
 ## Data model (summary)
 
-Built so far: `matches`, `tournaments`, `players`, `elo_long`.
+Built so far: `matches`, `tournaments`, `players`, `elo_long`, and two derived aggregate tables, `serve_advantage_by_year` and `serve_advantage_pooled`.
 Planned: `venues`, `editions`, `weather`, `rankings`, `ball_notes`.
 
 Every table includes `source` and `licence` columns, and tables of my own are kept separate from third-party data.
 
 ## Roadmap
 
-1. Setup: repository, environment and data download.
-2. Matches and expected performance (Elo) in SQLite. *(in progress)*
-3. Venues, weather and estimated speed for the 14 tournaments.
+1. Setup: repository, environment and data download. *(done)*
+2. Matches and expected performance (Elo) in SQLite. *(done)*
+3. Venues, weather and estimated speed for the 14 tournaments. *(started: serve advantage built; venues, altitude and weather next)*
 4. Profiles by conditions and recent form.
 5. Web dashboard with selectors to group and mix.
 6. Extend to ATP 500 and 250.
