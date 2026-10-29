@@ -84,8 +84,10 @@ tennis-conditions/
 ```
 
 ## Data model (summary)
+## Data model (summary)
 
-Built so far: `matches`, `tournaments`, `players`, `elo_long`, and two derived aggregate tables, `serve_advantage_by_year` and `serve_advantage_pooled`.
+Built so far: `matches`, `tournaments`, `players`, `elo_long`, and derived aggregate tables: `serve_advantage_by_year`, `serve_advantage_pooled`, `elo_ranking_snapshots` and `player_season_cards`.
+
 Planned: `venues`, `editions`, `weather`, `rankings`, `ball_notes`.
 
 Every table includes `source` and `licence` columns, and tables of my own are kept separate from third-party data.
