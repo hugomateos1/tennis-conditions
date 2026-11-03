@@ -1,0 +1,2 @@
+date,player,event_no,tournament,round,result,n_sets,best_of,source,date_consulted,doubtful,notes
+2026-11-03,Novak Djokovic,352,Paris Masters,R32,W,3,3,"Tennis Majors match page and Reuters report, both 3 Nov 2026",2026-11-03,no,"Added by hand: not in TML files yet. Round named differently by different sources. Remove when TML includes Paris 2026."
