@@ -1,0 +1,9 @@
+ charts/player_season_vs_paris.png | Bin [31m563071[m -> [32m564237[m bytes
+ data/own/manual_results.csv       |   2 [32m+[m
+ notebooks/02_all_years.ipynb      |   2 [32m+[m[31m-[m
+ notebooks/03_clean.ipynb          |   2 [32m+[m[31m-[m
+ notebooks/04_sql_queries.ipynb    | 163 [32m+++++++++++++++++++++++++++++++++++++[m[31m-[m
+ notebooks/05_elo.ipynb            |   2 [32m+[m[31m-[m
+ notebooks/06_form.ipynb           |   2 [32m+[m[31m-[m
+ notebooks/07_charts.ipynb         | 150 [32m++++++++++++++++++++++++++++++++++[m[31m-[m
+ 8 files changed, 317 insertions(+), 6 deletions(-)
