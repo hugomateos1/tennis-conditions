@@ -1,0 +1,21 @@
+year,cpi,source,date_consulted,primary,doubtful,notes
+2012,32.2,https://www.google.hu/amp/s/www.perfect-tennis.com/court-speed-2017/amp/,2026-11-05,1,no,Single source (blog table)
+2013,31.2,https://www.google.hu/amp/s/www.perfect-tennis.com/court-speed-2017/amp/,2026-11-05,1,no,Single source (blog table)
+2014,31.8,https://www.google.hu/amp/s/www.perfect-tennis.com/court-speed-2017/amp/,2026-11-05,1,no,Single source (blog table)
+2015,29.9,https://www.google.hu/amp/s/www.perfect-tennis.com/court-speed-2017/amp/,2026-11-05,1,no,Single source (blog table)
+2016,38.9,https://www.google.hu/amp/s/www.perfect-tennis.com/court-speed-2017/amp/,2026-11-05,1,yes,From a TennisTV screenshot mid-tournament
+2016,39.1,https://www.google.hu/amp/s/www.perfect-tennis.com/court-speed-2017/amp/,2026-11-05,0,yes,Hawk-Eye figure obtained by the same blogger
+2017,37.5,https://www.google.hu/amp/s/www.perfect-tennis.com/court-speed-2017/amp/,2026-11-05,1,no,Single source (blog table)
+2018,34.6,https://www.google.com/amp/s/www.perfect-tennis.com/masters-1000-court-speed-in-2018/amp/,2026-11-05,1,no,Single source (blog table)
+2021,37.1,https://tennisedge.io/paris-2026-masters-1000-preview/,2026-11-05,1,yes,Another source gives 31
+2021,31,https://x.com/Olly_Tennis_/status/1983163703324487774,2026-11-05,0,yes,Infographic for the central court
+2022,37.1,https://tennisedge.io/paris-2026-masters-1000-preview/,2026-11-05,1,yes,Another source gives 31
+2022,31,https://x.com/Olly_Tennis_/status/1983163703324487774,2026-11-05,0,yes,Infographic for the central court
+2023,40.4,https://tennisedge.io/paris-2026-masters-1000-preview/,2026-11-05,1,no,Another source gives 40.3
+2023,40.3,https://x.com/Olly_Tennis_/status/1983163703324487774,2026-11-05,0,no,Infographic for the central court
+2024,45.5,https://www.puntodebreak.com/en/2024/10/29/the-tracks-of-paris-the-fastest-in-decade-throughout-the-circuit,2026-11-05,1,yes,Several sources; another gives 46.6
+2024,46.6,https://www.si.com/onsi/serve/news/data-shows-major-change-in-2025-rolex-paris-masters-court-speed,2026-11-05,0,yes,Quoted by SI and an infographic
+2025,35.1,https://www.si.com/onsi/serve/news/data-shows-major-change-in-2025-rolex-paris-masters-court-speed,2026-11-05,1,no,Several sources agree
+2025,35,https://x.com/Olly_Tennis_/status/1983163703324487774,2026-11-05,0,no,Infographic for the central court
+2026,48.2,https://www.tennisactu.net/news-rolex-paris-masters-la-vitesse-des-courts-parisiens-a-explose-en-un-an-128090.html,2026-11-05,1,yes,In progress: CourtSpeed value updated on 4 November
+2026,47.9,https://www.puntodebreak.com/2026/11/03/m1000-paris-coloca-pistas-mas-rapidas-20-anos,2026-11-05,0,yes,In progress: Monday value from tournament data
